@@ -54,7 +54,21 @@ router.post('/query', requireApiKey, async (req, res) => {
     const context = results[0][0].data;
     const prompt =  `You are a helpful assistant. Use the context to answer the question concisely. Context: ${context} Question: ${query} Answer:`;
     
-    const response = await generate(prompt);
+    let response = await generate(prompt);
+    const match = response.match(/Answer:(.*?)(?=Question:|Answer:|$)/s);
+
+    if (match) {
+      if (match[1]) {
+        response= match[1].trim();
+      } else {
+        // fallback: everything before the start of match[0]
+        const index = text.indexOf(match[0]);
+        if (index > 0) {
+          response = text.slice(0, index).trim();
+        }
+      }
+    }
+
     res.json({ 'text': response });
   } catch (err) {
     console.error(err);

@@ -22,38 +22,29 @@ This system allows users to interact with an intelligent assistant that can answ
   - `/insert`: Accepts new documents and embeds them
   - `/search`: Performs top-k dot product similarity search
   - `/query`: RAG-based query answering
+### API Overview
+
+#### Endpoints
+
+| Endpoint   | Method | Description                                 |
+|------------|--------|---------------------------------------------|
+| `/insert`  | POST   | Insert documents and store embeddings       |
+| `/search`  | POST   | Perform vector search on inserted documents |
+| `/query`   | POST   | Full RAG flow: embed → search → generate    |
+
+---
+
+#### Request Headers
+
+All API requests must include the following headers:
+
+```http
+x-api-key: <Secret API Key>
+Content-Type: application/json
+```
 
 ### Vector Database
 - Simple Python implementation with flat index
 - Embeddings stored in-memory or on disk (JSON)
 - Supports single and batch insertions
 - Efficient top-k dot product similarity search
-
----
-
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18+)
-- Python 3.9+
-- `pip` and `virtualenv`
-- `npm` or `yarn`
-
----
-
-### Installation
-
-cd backend
-npm install
-
-cd vector_db
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-cd frontend
-npm install

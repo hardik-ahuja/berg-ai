@@ -29,7 +29,8 @@ export async function bootstrap() {
     const texts = docs.map(d => d.data);
     const vectors = await embed(texts);
     const payload = docs.map((doc, i) => ({
-      ...doc,
+      id: doc.id || v4(),
+      text: doc.data,
       embedding: vectors[i]
     }));
 

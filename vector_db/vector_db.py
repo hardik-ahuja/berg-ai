@@ -21,4 +21,12 @@ class VectorDB:
         vectors_np = np.array(self.vectors)
         sims = np.dot(vectors_np, query_vector.T).squeeze()
         top_indices = sims.argsort()[::-1][:top_k]
-        return [(self.metadata[i], sims[i]) for i in top_indices]
+        
+        results = []
+        for i in top_indices:
+            result = self.metadata[i].copy()
+            result['similarity'] = float(sims[i])
+            # result['text'] = self.text[i]  # Ensure you store original texts in self.texts
+            results.append(result)
+
+        return results

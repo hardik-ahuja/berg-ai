@@ -1,6 +1,4 @@
-const VALID_API_KEYS = [
-    'Khuljasimsim'
-];
+import { VALID_API_KEYS } from '../config.js';
 
 export function requireApiKey(req, res, next) {
   const apiKey = req.headers['x-api-key'];
